@@ -51,7 +51,7 @@ if TYPE_CHECKING:
     CMAKE_BUILD_TYPE: Optional[str] = None
     VERBOSE: bool = False
     VLLM_ALLOW_LONG_MAX_MODEL_LEN: bool = False
-
+    VLLM_TEST_FORCE_FP8_MARLIN: bool = False
 
 def get_default_cache_root():
     return os.getenv(
@@ -341,6 +341,12 @@ environment_variables: Dict[str, Callable[[], Any]] = {
     lambda:
     (os.environ.get("VLLM_ALLOW_LONG_MAX_MODEL_LEN", "0").strip().lower() in
      ("1", "true")),
+    # If set, forces FP8 Marlin to be used for FP8 quantization regardless
+    # of the hardware support for FP8 compute.
+    "VLLM_TEST_FORCE_FP8_MARLIN":
+        lambda:
+        (os.environ.get("VLLM_TEST_FORCE_FP8_MARLIN", "0").strip().lower() in
+         ("1", "true")),
 }
 
 # end-env-vars-definition
